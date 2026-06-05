@@ -1,19 +1,33 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta http-equiv='cache-control' content='no-cache'> 
-        <meta http-equiv='expires' content='0'> 
-        <meta http-equiv='pragma' content='no-cache'>
-        <title>Tezeon Services limited | Pioneering Sustainable Water Solutions</title>
-        <meta content="width=device-width, initial-scale=1.0" name="viewport">
-        <meta content="Water production and exploration company" name="keywords">
-        <meta content="Tezeon services limited, exploration and water production" name="description">
-
+        <title>Our Services | Tezeon Services Limited | Water Filtration, Drilling & Plumbing</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Tezeon Services offers water filtration, borehole drilling, reservoir construction, plumbing, home water systems and treatment plant management across Nigeria.">
+        <meta name="keywords" content="water filtration Nigeria, borehole drilling Lagos, reservoir construction, plumbing Lagos, water treatment plant, home water system">
+        <!-- Open Graph -->
+        <meta property="og:title" content="Water Engineering Services | Tezeon Services Limited">
+        <meta property="og:description" content="Filtration, borehole drilling, reservoir construction, plumbing and home water systems. Professional water solutions across Nigeria.">
+        <meta property="og:image" content="https://res.cloudinary.com/dxd3nmbag/image/upload/v1755441476/waterlog_lnxqbb.png">
+        <meta property="og:url" content="https://tezeonservicesltd.com/service.html">
+        <meta property="og:type" content="website">
+        <!-- Twitter Card -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Water Engineering Services | Tezeon Services Limited">
+        <meta name="twitter:description" content="Filtration, borehole drilling, reservoir construction, plumbing and home water systems. Professional water solutions across Nigeria.">
+        <meta name="twitter:image" content="https://res.cloudinary.com/dxd3nmbag/image/upload/v1755441476/waterlog_lnxqbb.png">
+        <link rel="canonical" href="https://tezeonservicesltd.com/service.html">
         <!-- Favicon -->
-        <link href="img/favicon.ico" rel="icon">
-
+        <link href="https://res.cloudinary.com/dxd3nmbag/image/upload/v1755441476/waterlog_lnxqbb.png" rel="icon">
+        <!-- Performance: CDN preconnect -->
+        <link rel="preconnect" href="https://res.cloudinary.com">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="dns-prefetch" href="https://stackpath.bootstrapcdn.com">
+        <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+        <link rel="dns-prefetch" href="https://code.jquery.com">
         <!-- Google Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap" rel="stylesheet">
@@ -31,389 +45,8 @@
 
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
-
         <!-- Chatbot CSS -->
-        <style>
-            /* Importing Google Fonts - Inter */
-            @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap');
-
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-                font-family: "Inter", sans-serif;
-            }
-
-            #chatbot-toggler {
-                position: fixed;
-                bottom: 30px;
-                right: 35px;
-                border: none;
-                height: 50px;
-                width: 50px;
-                display: flex;
-                cursor: pointer;
-                align-items: center;
-                justify-content: center;
-                border-radius: 50%;
-                background: #007bff; /* Match website's Bootstrap blue */
-                box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-                transition: all 0.2s ease;
-            }
-
-            body.show-chatbot #chatbot-toggler {
-                transform: rotate(90deg);
-            }
-
-            #chatbot-toggler span {
-                color: #fff;
-                position: absolute;
-                font-size: 1.5rem;
-            }
-
-            #chatbot-toggler span:last-child,
-            body.show-chatbot #chatbot-toggler span:first-child {
-                opacity: 0;
-            }
-
-            body.show-chatbot #chatbot-toggler span:last-child {
-                opacity: 1;
-            }
-
-            .chatbot-popup {
-                position: fixed;
-                right: 35px;
-                bottom: 90px;
-                width: 420px;
-                overflow: hidden;
-                background: #fff;
-                border-radius: 15px;
-                opacity: 0;
-                pointer-events: none;
-                transform: scale(0.2);
-                transform-origin: bottom right;
-                box-shadow: 0 0 128px 0 rgba(0, 0, 0, 0.1),
-                    0 32px 64px -48px rgba(0, 0, 0, 0.5);
-                transition: all 0.1s ease;
-            }
-
-            body.show-chatbot .chatbot-popup {
-                opacity: 1;
-                pointer-events: auto;
-                transform: scale(1);
-            }
-
-            .chat-header {
-                display: flex;
-                align-items: center;
-                padding: 15px 22px;
-                background: #007bff; /* Match website's theme */
-                justify-content: space-between;
-            }
-
-            .chat-header .header-info {
-                display: flex;
-                gap: 10px;
-                align-items: center;
-            }
-
-            .header-info .chatbot-logo {
-                width: 35px;
-                height: 35px;
-                padding: 6px;
-                flex-shrink: 0;
-                background: #fff;
-                border-radius: 50%;
-            }
-
-            .header-info .logo-text {
-                color: #fff;
-                font-weight: 600;
-                font-size: 1.31rem;
-                letter-spacing: 0.02rem;
-            }
-
-            .chat-header #close-chatbot {
-                border: none;
-                color: #fff;
-                height: 40px;
-                width: 40px;
-                font-size: 1.9rem;
-                margin-right: -10px;
-                padding-top: 2px;
-                cursor: pointer;
-                border-radius: 50%;
-                background: none;
-                transition: 0.2s ease;
-            }
-
-            .chat-header #close-chatbot:hover {
-                background: #0056b3;
-            }
-
-            .chat-body {
-                padding: 25px 22px;
-                gap: 20px;
-                display: flex;
-                height: 460px;
-                overflow-y: auto;
-                margin-bottom: 82px;
-                flex-direction: column;
-                scrollbar-width: thin;
-                scrollbar-color: #b9fdff transparent;
-            }
-
-            .chat-body .message {
-                display: flex;
-                gap: 11px;
-                align-items: center;
-            }
-
-            .chat-body .message .bot-avatar {
-                width: 35px;
-                height: 35px;
-                padding: 6px;
-                flex-shrink: 0;
-                margin-bottom: 2px;
-                align-self: flex-end;
-                border-radius: 50%;
-                background: #007bff; /* Match theme */
-            }
-
-            .chat-body .message .message-text {
-                padding: 12px 16px;
-                max-width: 75%;
-                font-size: 0.95rem;
-            }
-
-            .chat-body .bot-message.thinking .message-text {
-                padding: 2px 16px;
-            }
-
-            .chat-body .bot-message .message-text {
-                background: #e9ecef;
-                border-radius: 13px 13px 13px 3px;
-            }
-
-            .chat-body .user-message {
-                flex-direction: column;
-                align-items: flex-end;
-            }
-
-            .chat-body .user-message .message-text {
-                color: #fff;
-                background: #007bff; /* Match theme */
-                border-radius: 13px 13px 3px 13px;
-            }
-
-            .chat-body .user-message .attachment {
-                width: 50%;
-                margin-top: -7px;
-                border-radius: 13px 3px 13px 13px;
-            }
-
-            .chat-body .bot-message .thinking-indicator {
-                display: flex;
-                gap: 4px;
-                padding-block: 15px;
-            }
-
-            .chat-body .bot-message .thinking-indicator .dot {
-                height: 7px;
-                width: 7px;
-                opacity: 0.7;
-                border-radius: 50%;
-                background: #007bff; /* Match theme */
-                animation: dotPulse 1.8s ease-in-out infinite;
-            }
-
-            .chat-body .bot-message .thinking-indicator .dot:nth-child(1) {
-                animation-delay: 0.2s;
-            }
-
-            .chat-body .bot-message .thinking-indicator .dot:nth-child(2) {
-                animation-delay: 0.3s;
-            }
-
-            .chat-body .bot-message .thinking-indicator .dot:nth-child(3) {
-                animation-delay: 0.4s;
-            }
-
-            @keyframes dotPulse {
-                0%, 44% {
-                    transform: translateY(0);
-                }
-                28% {
-                    opacity: 0.4;
-                    transform: translateY(-4px);
-                }
-                44% {
-                    opacity: 0.2;
-                }
-            }
-
-            .chat-footer {
-                position: absolute;
-                bottom: 0;
-                width: 100%;
-                background: #fff;
-                padding: 15px 22px 20px;
-            }
-
-            .chat-footer .chat-form {
-                display: flex;
-                align-items: center;
-                position: relative;
-                background: #fff;
-                border-radius: 32px;
-                outline: 1px solid #CCCCE5;
-                box-shadow: 0 0 8px rgba(0, 0, 0, 0.06);
-                transition: 0s ease, border-radius 0s;
-            }
-
-            .chat-form:focus-within {
-                outline: 2px solid #007bff; /* Match theme */
-            }
-
-            .chat-form .message-input {
-                width: 100%;
-                height: 47px;
-                outline: none;
-                resize: none;
-                border: none;
-                max-height: 180px;
-                scrollbar-width: thin;
-                border-radius: inherit;
-                font-size: 0.95rem;
-                padding: 14px 0 12px 18px;
-                scrollbar-color: transparent transparent;
-            }
-
-            .chat-form .message-input:hover {
-                scrollbar-color: #b9fdff transparent;
-            }
-
-            .chat-form .chat-controls {
-                gap: 3px;
-                height: 47px;
-                display: flex;
-                padding-right: 6px;
-                align-items: center;
-                align-self: flex-end;
-            }
-
-            .chat-form .chat-controls button {
-                height: 35px;
-                width: 35px;
-                border: none;
-                cursor: pointer;
-                color: #007bff; /* Match theme */
-                border-radius: 50%;
-                font-size: 1.15rem;
-                background: none;
-                transition: 0.2s ease;
-            }
-
-            .chat-form .chat-controls button:hover,
-            body.show-emoji-picker .chat-controls #emoji-picker {
-                color: #007bff;
-                background: #f1f1ff;
-            }
-
-            .chat-form .chat-controls #send-message {
-                color: #fff;
-                display: none;
-                background: #007bff; /* Match theme */
-            }
-
-            .chat-form .chat-controls #send-message:hover {
-                background: #0056b3;
-            }
-
-            .chat-form .message-input:valid~.chat-controls #send-message {
-                display: block;
-            }
-
-            .chat-form .file-upload-wrapper {
-                position: relative;
-                height: 35px;
-                width: 35px;
-            }
-
-            .chat-form .file-upload-wrapper :where(button, img) {
-                position: absolute;
-            }
-
-            .chat-form .file-upload-wrapper img {
-                height: 100%;
-                width: 100%;
-                object-fit: cover;
-                border-radius: 50%;
-            }
-
-            .chat-form .file-upload-wrapper #file-cancel {
-                color: #ff0000;
-                background: #fff;
-            }
-
-            .chat-form .file-upload-wrapper :where(img, #file-cancel),
-            .chat-form .file-upload-wrapper.file-uploaded #file-upload {
-                display: none;
-            }
-
-            .chat-form .file-upload-wrapper.file-uploaded img,
-            .chat-form .file-upload-wrapper.file-uploaded:hover #file-cancel {
-                display: block;
-            }
-
-            em-emoji-picker {
-                position: absolute;
-                left: 50%;
-                top: -337px;
-                width: 100%;
-                max-width: 350px;
-                visibility: hidden;
-                max-height: 330px;
-                transform: translateX(-50%);
-            }
-
-            body.show-emoji-picker em-emoji-picker {
-                visibility: visible;
-            }
-
-            /* Responsive media query for mobile screens */
-            @media (max-width: 520px) {
-                #chatbot-toggler {
-                    right: 20px;
-                    bottom: 20px;
-                }
-
-                .chatbot-popup {
-                    right: 0;
-                    bottom: 0;
-                    height: 100%;
-                    border-radius: 0;
-                    width: 100%;
-                }
-
-                .chatbot-popup .chat-header {
-                    padding: 12px 15px;
-                }
-
-                .chat-body {
-                    height: calc(90% - 55px);
-                    padding: 25px 15px;
-                }
-
-                .chat-footer {
-                    padding: 10px 15px 15px;
-                }
-
-                .chat-form .file-upload-wrapper.file-uploaded #file-cancel {
-                    opacity: 0;
-                }
-            }
-        </style>
+        <link href="css/chatbot.css" rel="stylesheet">
     </head>
 
     <body>
@@ -487,6 +120,7 @@
                                 <a href="service.html" class="nav-item nav-link active">Service</a>
                                 <a href="team.html" class="nav-item nav-link">Team</a>
                                 <a href="portfolio.html" class="nav-item nav-link">Project</a>
+                                <a href="gallery.html" class="nav-item nav-link">Gallery</a>
                                 <a href="contact.html" class="nav-item nav-link">Contact</a>
                             </div>
                             <div class="ml-auto">
@@ -783,11 +417,11 @@
                         <div class="col-md-6 col-lg-3">
                             <div class="footer-link">
                                 <h2>Useful Pages</h2>
-                                <a href="">About Us</a>
-                                <a href="">Contact Us</a>
-                                <a href="">Our Team</a>
-                                <a href="">Projects</a>
-                                <a href="">Testimonial</a>
+                                <a href="about.html">About Us</a>
+                                <a href="contact.html">Contact Us</a>
+                                <a href="team.html">Our Team</a>
+                                <a href="portfolio.html">Projects</a>
+                                <a href="index.html#testimonial">Testimonial</a>
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-3">
@@ -879,6 +513,6 @@
         <!-- Chatbot JavaScript -->
         <script src="js/chatbot.js"></script>
         <!-- Template Javascript -->
-        <script src="js/main.js"></script>
+        <script src="js/script.js"></script>
     </body>
 </html>

@@ -1,65 +1,58 @@
+// Contact form handler — uses Formspree (free tier, no server needed)
+// SETUP: Replace YOUR_FORM_ID below with your Formspree form ID.
+// 1. Sign up at https://formspree.io (free)
+// 2. Create a new form and copy the form ID (e.g. "xpwzgkqr")
+// 3. Replace YOUR_FORM_ID with that ID
+var FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID';
+
 $(function () {
-
-    $("#contactForm input, #contactForm textarea").jqBootstrapValidation({
-        preventSubmit: true,
-        submitError: function ($form, event, errors) {
-        },
-        submitSuccess: function ($form, event) {
-            event.preventDefault();
-            var name = $("Mawoda").val();
-            var email = $("1mawoda@gmail.com").val();
-            var subject = $("Enquiry").val();
-            var message = $("").val();
-
-            $this = $("#sendMessageButton");
-            $this.prop("disabled", true);
-
-            $.ajax({
-                url: "contact.php",
-                type: "POST",
-                data: {
-                    name: name,
-                    email: email,
-                    subject: subject,
-                    message: message
-                },
-                cache: false,
-                success: function () {
-                    $('#success').html("<div class='alert alert-success'>");
-                    $('#success > .alert-success').html("<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;")
-                            .append("</button>");
-                    $('#success > .alert-success')
-                            .append("<strong>Your message has been sent. </strong>");
-                    $('#success > .alert-success')
-                            .append('</div>');
-                    $('#contactForm').trigger("reset");
-                },
-                error: function () {
-                    $('#success').html("<div class='alert alert-danger'>");
-                    $('#success > .alert-danger').html("<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;")
-                            .append("</button>");
-                    $('#success > .alert-danger').append($("<strong>").text("Sorry " + name + ", it seems that our mail server is not responding. Please try again later!"));
-                    $('#success > .alert-danger').append('</div>');
-                    $('#contactForm').trigger("reset");
-                },
-                complete: function () {
-                    setTimeout(function () {
-                        $this.prop("disabled", false);
-                    }, 1000);
-                }
-            });
-        },
-        filter: function () {
-            return $(this).is(":visible");
-        },
-    });
-
-    $("a[data-toggle=\"tab\"]").click(function (e) {
+    $('#contactForm').on('submit', function (e) {
         e.preventDefault();
-        $(this).tab("show");
-    });
-});
 
-$('#name').focus(function () {
-    $('#success').html('');
+        var name    = $('#name').val().trim();
+        var email   = $('#email').val().trim();
+        var subject = $('#subject').val().trim();
+        var message = $('#message').val().trim();
+        var $btn    = $('#sendMessageButton');
+        var $status = $('#success');
+
+        // Basic client-side validation
+        if (!name || !email || !subject || !message) {
+            $status.html('<div class="alert alert-warning">Please fill in all fields.</div>');
+            return;
+        }
+
+        $btn.prop('disabled', true).text('Sending…');
+        $status.html('');
+
+        $.ajax({
+            url: FORMSPREE_ENDPOINT,
+            method: 'POST',
+            data: { name: name, email: email, subject: subject, message: message },
+            dataType: 'json',
+            success: function () {
+                $status.html(
+                    '<div class="alert alert-success">' +
+                    '<strong>Message sent!</strong> We will get back to you within 24 hours.' +
+                    '</div>'
+                );
+                $('#contactForm')[0].reset();
+            },
+            error: function () {
+                $status.html(
+                    '<div class="alert alert-danger">' +
+                    '<strong>Sending failed.</strong> Please try again or call us at <a href="tel:+2348030967886">+234 803 096 7886</a>.' +
+                    '</div>'
+                );
+            },
+            complete: function () {
+                $btn.prop('disabled', false).text('Send Message');
+            }
+        });
+    });
+
+    // Clear status when user starts typing again
+    $('#name').on('focus', function () {
+        $('#success').html('');
+    });
 });
