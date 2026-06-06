@@ -47,9 +47,16 @@
         <link href="css/style.css" rel="stylesheet">
         <!-- Chatbot CSS -->
         <link href="css/chatbot.css" rel="stylesheet">
+        <!-- GSAP + ScrollTrigger -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     </head>
 
-    <body>
+    <body class="tez-loading">
+        <!-- Page Loader -->
+        <div id="tez-page-loader" aria-hidden="true">
+            <div class="tpl-fill-bar" id="tplFill"></div>
+        </div>
         <div class="wrapper">
             <!-- Top Bar Start -->
             <div class="top-bar">
@@ -461,42 +468,6 @@
             <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
         </div>
 
-        <!-- Chatbot HTML -->
-        <button id="chatbot-toggler">
-            <span class="material-symbols-rounded">mode_comment</span>
-            <span class="material-symbols-rounded">close</span>
-        </button>
-        <div class="chatbot-popup">
-            <div class="chat-header">
-                <div class="header-info">
-                    <img class="chatbot-logo" src="https://res.cloudinary.com/dxd3nmbag/image/upload/v1755441476/waterlog_lnxqbb.png" alt="Tezeon Logo">
-                    <h2 class="logo-text">Tezeon Water Bot</h2>
-                </div>
-                <button id="close-chatbot" class="material-symbols-rounded">keyboard_arrow_down</button>
-            </div>
-            <div class="chat-body">
-                <div class="message bot-message">
-                    <img class="bot-avatar" src="https://res.cloudinary.com/dxd3nmbag/image/upload/v1755441476/waterlog_lnxqbb.png" alt="Tezeon Logo">
-                    <div class="message-text">Welcome to Tezeon Services! Ask me about water systems, plumbing, or boreholes.</div>
-                </div>
-            </div>
-            <div class="chat-footer">
-                <form action="#" class="chat-form">
-                    <textarea placeholder="Ask about water or plumbing..." class="message-input" required></textarea>
-                    <div class="chat-controls">
-                        <button type="button" id="emoji-picker" class="material-symbols-outlined">sentiment_satisfied</button>
-                        <div class="file-upload-wrapper">
-                            <input type="file" accept="image/*" id="file-input" hidden />
-                            <img src="#" />
-                            <button type="button" id="file-upload" class="material-symbols-rounded">attach_file</button>
-                            <button type="button" id="file-cancel" class="material-symbols-rounded">close</button>
-                        </div>
-                        <button type="submit" id="send-message" class="material-symbols-rounded">arrow_upward</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-
         <!-- JavaScript Libraries -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
@@ -508,11 +479,10 @@
         <script src="lib/waypoints/waypoints.min.js"></script>
         <script src="lib/counterup/counterup.min.js"></script>
         <script src="lib/slick/slick.min.js"></script>
-        <!-- Emoji Picker -->
-        <script src="https://cdn.jsdelivr.net/npm/@joeattardi/emoji-button@4.6.0/dist/index.min.js"></script>
-        <!-- Chatbot JavaScript -->
+        <!-- Chatbot -->
         <script src="js/chatbot.js"></script>
         <!-- Template Javascript -->
         <script src="js/script.js"></script>
+        <script src="js/animations.js"></script>
     </body>
 </html>
