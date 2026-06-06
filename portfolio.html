@@ -43,9 +43,17 @@
 
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
+        <link href="css/chatbot.css" rel="stylesheet">
+        <!-- GSAP + ScrollTrigger -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     </head>
 
-    <body>
+    <body class="tez-loading">
+        <!-- Page Loader -->
+        <div id="tez-page-loader" aria-hidden="true">
+            <div class="tpl-fill-bar" id="tplFill"></div>
+        </div>
         <div class="wrapper">
             <!-- Top Bar Start -->
             <div class="top-bar">
@@ -249,6 +257,20 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 portfolio-item first wow fadeInUp" data-wow-delay="0.7s">
+                            <div class="portfolio-warp">
+                                <div class="portfolio-img">
+                                    <img src="assets/filtration-tanks.png" alt="Industrial filtration tank installation" loading="lazy">
+                                    <div class="portfolio-overlay">
+                                        <p>Filtration tank installation</p>
+                                    </div>
+                                </div>
+                                <div class="portfolio-text">
+                                    <h3>Filtration Tank Install</h3>
+                                    <a class="btn" href="assets/filtration-tanks.png" data-lightbox="portfolio" data-title="Filtration Tank Installation">+</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-12 load-more">
@@ -354,5 +376,7 @@
 
         <!-- Template Javascript -->
         <script src="js/script.js"></script>
+        <script src="js/animations.js"></script>
+        <script src="js/chatbot.js"></script>
     </body>
 </html>

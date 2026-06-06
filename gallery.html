@@ -41,9 +41,17 @@
         <link href="lib/slick/slick-theme.css" rel="stylesheet">
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
+        <link href="css/chatbot.css" rel="stylesheet">
+        <!-- GSAP + ScrollTrigger -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     </head>
 
-    <body class="gallery-page">
+    <body class="gallery-page tez-loading">
+        <!-- Page Loader -->
+        <div id="tez-page-loader" aria-hidden="true">
+            <div class="tpl-fill-bar" id="tplFill"></div>
+        </div>
         <div class="wrapper">
             <!-- Top Bar Start -->
             <div class="top-bar">
@@ -287,6 +295,40 @@
                             </div>
                         </div>
 
+                        <!-- LOCAL VIDEO ITEM -->
+                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 portfolio-item cat-video wow fadeInUp gallery-video-item" data-wow-delay="0.9s">
+                            <div class="portfolio-warp">
+                                <div class="portfolio-img gallery-video-trigger" data-video-src="assets/site-video-1.mp4">
+                                    <img src="assets/filtration-tanks.png" alt="Water treatment tank installation" loading="lazy">
+                                    <div class="portfolio-overlay">
+                                        <div class="gallery-play-btn">
+                                            <i class="fas fa-play"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="portfolio-text">
+                                    <h3>Treatment System Install</h3>
+                                    <button class="btn gallery-video-trigger" data-video-src="assets/site-video-1.mp4" aria-label="Play treatment installation video"><i class="fas fa-play" style="font-size:24px;line-height:1;padding-top:3px;"></i></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- LOCAL IMAGE ITEM -->
+                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 portfolio-item cat-filtration wow fadeInUp" data-wow-delay="1.0s">
+                            <div class="portfolio-warp">
+                                <div class="portfolio-img">
+                                    <img src="assets/filtration-tanks.png" alt="Industrial filtration tank installation" loading="lazy">
+                                    <div class="portfolio-overlay">
+                                        <p>Filtration tank installation</p>
+                                    </div>
+                                </div>
+                                <div class="portfolio-text">
+                                    <h3>Filtration Tank Install</h3>
+                                    <a class="btn" href="assets/filtration-tanks.png" data-lightbox="gallery" data-title="Filtration Tank Installation">+</a>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                     <!-- Gallery End -->
                     <!--
@@ -447,6 +489,8 @@
         <script src="lib/slick/slick.min.js"></script>
         <!-- Template Javascript -->
         <script src="js/script.js"></script>
+        <script src="js/animations.js"></script>
+        <script src="js/chatbot.js"></script>
 
         <!-- Gallery: video modal handler -->
         <script>

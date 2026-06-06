@@ -1,9 +1,252 @@
+/* =============================================
+   INNER PAGE LOADER  (non-index pages)
+   ============================================= */
+
+#tez-page-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 99998;
+    background: #030f27;
+    will-change: transform;
+    overflow: hidden;
+}
+
+#tez-page-loader .tpl-fill-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0%;
+    background: linear-gradient(90deg, #fdbe33 0%, #ffda80 100%);
+    transition: width 0.75s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
+/* =============================================
+   PRELOADER
+   ============================================= */
+
+body.tez-loading { overflow: hidden; }
+
+/* ── Preloader backdrop with deep water gradient ── */
+#tez-preloader {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: linear-gradient(155deg, #020c20 0%, #030f27 40%, #061530 70%, #0a1e3d 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    will-change: transform;
+    overflow: hidden;
+}
+
+/* Radial gold glow at centre */
+#tez-preloader::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 65% 55% at 50% 44%, rgba(253, 190, 51, 0.09) 0%, transparent 68%);
+    pointer-events: none;
+}
+
+/* ── Ambient floating bubbles ── */
+.pre-ambient {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.pre-bub {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(253, 190, 51, 0.1);
+    border: 1px solid rgba(253, 190, 51, 0.18);
+    animation: pre-bub-float linear infinite;
+}
+
+.pre-bub.b1 { width: 18px; height: 18px; left: 12%;  bottom: -22px; animation-duration: 7.5s;  animation-delay: 0s;   }
+.pre-bub.b2 { width: 10px; height: 10px; left: 30%;  bottom: -22px; animation-duration: 9.2s;  animation-delay: 1.2s; }
+.pre-bub.b3 { width: 24px; height: 24px; left: 56%;  bottom: -22px; animation-duration: 8s;    animation-delay: 2.5s; }
+.pre-bub.b4 { width: 14px; height: 14px; left: 75%;  bottom: -22px; animation-duration: 10.5s; animation-delay: 0.7s; }
+.pre-bub.b5 { width:  8px; height:  8px; left: 88%;  bottom: -22px; animation-duration: 6.8s;  animation-delay: 3.1s; }
+
+@keyframes pre-bub-float {
+    0%   { transform: translateY(0) scale(1);     opacity: 0; }
+    10%  { opacity: 0.6; }
+    85%  { opacity: 0.25; }
+    100% { transform: translateY(-110vh) scale(0.65); opacity: 0; }
+}
+
+/* ── Content wrapper ── */
+.tez-pre-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 0 24px;
+}
+
+/* ── Logo ── */
+.tez-pre-logo-wrap {
+    position: relative;
+    display: block;       /* block so child left:50% is relative to full content width */
+    margin-bottom: 0;
+}
+
+.tez-pre-logo-wrap img {
+    width: 84px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    filter: drop-shadow(0 0 18px rgba(253, 190, 51, 0.55));
+}
+
+/* ── Teardrop water drops (GSAP controls transform; use margin-left for horizontal offset) ── */
+.tez-pre-drop {
+    position: absolute;
+    left: 50%;
+    bottom: -6px;
+    margin-left: -7px;   /* half of 14px width — avoids conflicting with GSAP transform */
+    width: 14px;
+    height: 20px;
+    background: radial-gradient(ellipse at 38% 28%, rgba(175, 230, 255, 0.96) 0%, rgba(40, 130, 230, 0.88) 50%, rgba(10, 55, 155, 0.92) 100%);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    opacity: 0;
+    filter: drop-shadow(0 3px 8px rgba(0, 140, 255, 0.55));
+    transform-origin: center top;
+}
+
+.tez-pre-drop-sm {
+    width: 9px;
+    height: 13px;
+    left: calc(50% + 11px);
+    margin-left: 0;
+    bottom: -3px;
+}
+
+/* ── Dual-layer name: dim base + gold rising fill ── */
+.tez-pre-name-wrap {
+    position: relative;
+    display: inline-block;
+    margin: 26px 0 0;
+    line-height: 1;
+}
+
+.pre-name-base,
+.pre-name-fill {
+    display: block;
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(1.6rem, 5vw, 2.4rem);
+    font-weight: 700;
+    letter-spacing: 3px;
+    white-space: nowrap;
+}
+
+.pre-name-base {
+    color: rgba(255, 255, 255, 0.14);
+}
+
+.pre-name-fill {
+    position: absolute;
+    inset: 0;
+    color: #fdbe33;
+    text-shadow: 0 0 24px rgba(253, 190, 51, 0.48);
+    clip-path: inset(100% 0% 0% 0%);
+}
+
+/* ── Ripple pool: elliptical rings from impact ── */
+.tez-pre-ripple-pool {
+    position: relative;
+    width: 220px;
+    height: 38px;
+    margin: 8px auto 0;
+}
+
+.tez-pre-ring {
+    position: absolute;
+    inset: 0;
+    border: 2px solid rgba(40, 150, 255, 0.7);
+    border-radius: 50%;
+    transform: scale(0);
+    opacity: 0;
+}
+
+.tez-pre-ring.r2 { border-color: rgba(110, 185, 255, 0.52); }
+.tez-pre-ring.r3 { border-color: rgba(170, 215, 255, 0.36); }
+
+/* ── Tagline ── */
+.tez-pre-tagline {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.48);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin: 14px 0 0;
+    opacity: 0;
+}
+
+/* ── Progress bar ── */
+.tez-pre-bar-wrap { margin-top: 28px; }
+
+.tez-pre-bar {
+    width: 200px;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.tez-pre-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #fdbe33 0%, #ffe080 100%);
+    border-radius: 2px;
+    transition: width 1.85s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Decorative animated SVG waves ── */
+.tez-pre-waves {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 90px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.tez-pre-waves svg {
+    width: 200%;
+    height: 100%;
+    display: block;
+    animation: pre-wave-roll 8s linear infinite;
+}
+
+.pre-wave.w1 { fill: rgba(253, 190, 51, 0.07); }
+.pre-wave.w2 { fill: rgba(30, 100, 220, 0.09); animation: pre-wave-roll 11s linear infinite reverse; }
+
+@keyframes pre-wave-roll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+}
+
+@keyframes tez-pre-breathe {
+    from { transform: scale(0.91); opacity: 0.75; }
+    to   { transform: scale(1.07); opacity: 1; }
+}
+
+
 /*******************************/
 /********* General CSS *********/
 /*******************************/
 body {
-    color: #666666;
-    background: #dddddd;
+    color: #555f6e;
+    background: linear-gradient(160deg, #eef4ff 0%, #f5f8ff 50%, #eaf1fb 100%);
+    background-attachment: fixed;
     font-family: 'Poppins', sans-serif;
     font-weight: 400;
 }
@@ -385,7 +628,7 @@ a:focus {
     margin-bottom: 45px;
     padding: 90px 0;
     text-align: center;
-    background: #fdbe33;
+    background: linear-gradient(135deg, #fdbe33 0%, #ffcb4a 50%, #ffe080 100%);
 }
 
 .page-header h2 {
@@ -501,12 +744,12 @@ a:focus {
 }
 
 .feature .col-md-12 {
-    background: #030f27;
+    background: linear-gradient(135deg, #030f27 0%, #051a3a 55%, #0a1e3d 100%);
 }
-    
+
 .feature .col-md-12:nth-child(2n) {
     color: #030f27;
-    background: #fdbe33;
+    background: linear-gradient(135deg, #fdbe33 0%, #ffcb4a 50%, #ffe080 100%);
 }
 
 .feature .feature-item {
@@ -594,6 +837,7 @@ a:focus {
     position: relative;
     width: 100%;
     padding: 45px 0;
+    background: linear-gradient(180deg, #ffffff 0%, #edf4ff 100%);
 }
 
 .about .section-header {
@@ -697,12 +941,12 @@ a:focus {
 
 .fact .fact-left {
     color: #fdbe33;
-    background: #030f27;
+    background: linear-gradient(135deg, #030f27 0%, #051a3a 55%, #0a1e3d 100%);
 }
 
 .fact .fact-right {
     color: #030f27;
-    background: #fdbe33;
+    background: linear-gradient(135deg, #fdbe33 0%, #ffcb4a 55%, #ffe596 100%);
 }
 
 .fact .fact-left h2 {
@@ -717,6 +961,7 @@ a:focus {
     position: relative;
     width: 100%;
     padding: 45px 0 15px 0;
+    background: linear-gradient(160deg, #f0f7ff 0%, #e8f2ff 60%, #f5f9ff 100%);
 }
 
 .service .service-item {
@@ -765,7 +1010,7 @@ a:focus {
     display: flex;
     align-items: center;
     height: 60px;
-    background: #030f27;
+    background: linear-gradient(90deg, #030f27 0%, #0a1e3d 100%);
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -933,6 +1178,7 @@ a:focus {
     position: relative;
     width: 100%;
     padding: 45px 0 15px 0;
+    background: linear-gradient(155deg, #f5f9ff 0%, #eaeffb 60%, #f0f6ff 100%);
 }
 
 .team .team-item {
@@ -956,7 +1202,7 @@ a:focus {
     position: relative;
     padding: 25px 15px;
     text-align: center;
-    background: #030f27;
+    background: linear-gradient(135deg, #030f27 0%, #0a1e3d 100%);
     transition: .5s;
 }
 
@@ -973,7 +1219,7 @@ a:focus {
 }
 
 .team .team-item:hover .team-text {
-    background: #fdbe33;
+    background: linear-gradient(135deg, #fdbe33 0%, #ffe080 100%);
 }
 
 .team .team-item:hover .team-text h2 {
@@ -1035,6 +1281,7 @@ a:focus {
     position: relative;
     width: 100%;
     padding: 45px 0;
+    background: linear-gradient(180deg, #edf4ff 0%, #f8fbff 50%, #ffffff 100%);
 }
 
 .faqs .row {
@@ -1935,6 +2182,7 @@ a:focus {
     position: relative;
     width: 100%;
     padding: 45px 0;
+    background: linear-gradient(160deg, #ffffff 0%, #edf4ff 55%, #f5f9ff 100%);
 }
 
 .contact .col-md-6 {
@@ -2065,7 +2313,7 @@ a:focus {
     position: relative;
     margin-top: 45px;
     padding-top: 90px;
-    background: #030f27;
+    background: linear-gradient(160deg, #030f27 0%, #051a3a 50%, #0a1e3d 100%);
     color: #ffffff;
 }
 
@@ -2836,3 +3084,309 @@ a:focus {
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
 }
+
+
+/* =============================================
+   VIDEO HERO  (replaces Bootstrap carousel on homepage)
+   ============================================= */
+
+.vid-hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    height: 100svh;
+    min-height: 520px;
+    overflow: hidden;
+    background: #030f27;
+}
+
+.vh-slides {
+    position: absolute;
+    inset: 0;
+}
+
+.vh-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 800ms cubic-bezier(0.25, 1, 0.5, 1);
+    z-index: 1;
+}
+
+.vh-slide.active {
+    opacity: 1;
+    z-index: 2;
+}
+
+.vh-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Gradient scrim — lighter at top (nav sits here), heavier at bottom-left (caption) */
+.vh-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        160deg,
+        rgba(3, 15, 39, 0.22) 0%,
+        rgba(3, 15, 39, 0.48) 55%,
+        rgba(3, 15, 39, 0.72) 100%
+    );
+    z-index: 1;
+}
+
+/* Caption — bottom-left, spec-aligned */
+.vh-caption {
+    position: absolute;
+    bottom: 14%;
+    left: 7%;
+    z-index: 3;
+    max-width: min(680px, 85vw);
+}
+
+.vh-sub {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #fdbe33;
+    margin-bottom: 14px;
+    opacity: 0;
+}
+
+.vh-heading {
+    font-size: clamp(1.9rem, 5.5vw, 4rem);
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.12;
+    margin-bottom: 30px;
+    opacity: 0;
+}
+
+.vh-cta {
+    opacity: 0;
+    background: #fdbe33;
+    color: #030f27;
+    font-weight: 700;
+    font-size: 15px;
+    padding: 13px 36px;
+    border-radius: 50px;
+    box-shadow: 0 6px 28px rgba(253, 190, 51, 0.45);
+    transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.vh-cta:hover {
+    background: #ffffff;
+    color: #030f27;
+    box-shadow: 0 10px 36px rgba(255,255,255,0.18);
+    transform: translateY(-2px);
+    text-decoration: none;
+}
+
+/* Apple-glass navigation arrows */
+.vh-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.10);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+}
+
+.vh-prev { left: 22px; }
+.vh-next { right: 22px; }
+
+.vh-arrow:hover {
+    background: rgba(253, 190, 51, 0.75);
+    color: #030f27;
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 6px 28px rgba(253,190,51,0.4);
+}
+
+/* Dot indicators */
+.vh-indicators {
+    position: absolute;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+}
+
+.vh-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.35);
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.3s ease, width 0.35s cubic-bezier(0.25, 1, 0.5, 1), border-radius 0.35s ease;
+}
+
+.vh-dot.active {
+    background: #fdbe33;
+    width: 26px;
+    border-radius: 4px;
+}
+
+/* Slide progress bar */
+.vh-progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.12);
+    z-index: 10;
+}
+
+#vhProgressFill {
+    height: 100%;
+    width: 0%;
+    background: #fdbe33;
+}
+
+@media (max-width: 767.98px) {
+    .vh-caption  { bottom: 18%; left: 5%; }
+    .vh-arrow    { width: 40px; height: 40px; font-size: 15px; }
+    .vh-prev     { left: 10px; }
+    .vh-next     { right: 10px; }
+    .vh-heading  { margin-bottom: 20px; }
+    .vh-cta      { padding: 11px 26px; font-size: 14px; }
+}
+
+
+/* =============================================
+   APPLE GLASSMORPHISM — NAV (sticky scroll)
+   ============================================= */
+
+.nav-bar {
+    transition: background 0.4s ease, backdrop-filter 0.4s ease, box-shadow 0.4s ease;
+}
+
+.nav-bar.nav-glassed .navbar {
+    background: rgba(3, 15, 39, 0.65) !important;
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.22);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+
+/* =============================================
+   APPLE GLASSMORPHISM — Cards & Modals
+   ============================================= */
+
+/* Feature items — live on dark columns, get a glass highlight */
+.feature .feature-item {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(8px) saturate(160%);
+    -webkit-backdrop-filter: blur(8px) saturate(160%);
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+/* Service overlay becomes frosted glass */
+.service .service-overlay {
+    background: rgba(3, 15, 39, 0.38) !important;
+    backdrop-filter: blur(12px) saturate(160%);
+    -webkit-backdrop-filter: blur(12px) saturate(160%);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Testimonial section glass card */
+.testimonial .slider-item {
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 12px;
+    padding: 24px;
+    margin: 0 8px;
+}
+
+/* Contact info items — glass on dark bg */
+.contact .contact-item {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(10px) saturate(160%);
+    -webkit-backdrop-filter: blur(10px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.10) !important;
+    border-radius: 8px;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.contact .contact-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-3px);
+}
+
+/* Video hero arrows already have glass — defined above */
+
+/* FAQ cards get subtle glass */
+.faqs .card {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    background: rgba(255, 255, 255, 0.96);
+    border-radius: 8px !important;
+    border: 1px solid rgba(0, 0, 0, 0.06) !important;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.faqs .card:hover {
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+
+/* =============================================
+   TOUCH BOUNCE  (CSS layer — GSAP adds spring)
+   ============================================= */
+
+.btn, .service-item, .team-item, .portfolio-warp,
+.collage-item, .feature-item, .vh-arrow, .vh-dot {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+/* CSS fallback for browsers without GSAP */
+@media (hover: none) and (pointer: coarse) {
+    .btn:active           { transform: scale(0.94); }
+    .service-item:active  { transform: scale(0.97); }
+    .team-item:active     { transform: scale(0.97); }
+    .vh-arrow:active      { transform: translateY(-50%) scale(0.92); }
+}
+
+
+/* =============================================
+   SCROLL REVEAL DEFAULTS
+   (elements start invisible; GSAP animates them in)
+   ============================================= */
+
+/* Prevent flash of invisible content on no-JS */
+.no-js .service-item,
+.no-js .team-item,
+.no-js .portfolio-item,
+.no-js .feature-item { opacity: 1 !important; transform: none !important; }
