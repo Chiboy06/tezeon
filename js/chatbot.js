@@ -144,8 +144,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             } catch (error) {
                 const messageElement = incomingMessageDiv.querySelector(".message-text");
-                messageElement.innerText = 'Error: Failed to connect to server';
-                messageElement.style.color = "#ff0000";
+                messageElement.innerHTML = 'Our assistant is temporarily unavailable. Please <a href="contact.html" style="color:#007bff">use our contact form</a> or call <a href="tel:+2348030967886" style="color:#007bff">+234 803 096 7886</a>.';
             } finally {
                 userData.file = {};
                 incomingMessageDiv.classList.remove("thinking");
