@@ -1,3 +1,8 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 /* =============================================
    INNER PAGE LOADER  (non-index pages)
    ============================================= */
@@ -96,7 +101,7 @@ body.tez-loading { overflow: hidden; }
 }
 
 .tez-pre-logo-wrap img {
-    width: 84px;
+    width: 100px;
     height: auto;
     display: block;
     margin: 0 auto;
@@ -132,6 +137,18 @@ body.tez-loading { overflow: hidden; }
     display: inline-block;
     margin: 26px 0 0;
     line-height: 1;
+}
+
+.preview-proj {
+    position: absolute;
+    color: white;
+    height: 100%;
+    margin: auto;
+    align-content: space-evenly;
+    font-size: 34px;
+    text-shadow: 0 0 12px rgba(253, 190, 51, 0.48);
+    text-align: center;
+    z-index: 1;
 }
 
 .pre-name-base,
@@ -321,7 +338,8 @@ a:focus {
 .top-bar {
     position: relative;
     height: 90px;
-    background: #fdbe33;
+    /* background: #fdbe33; */
+    background: #33d0fd;
 }
 
 .top-bar .logo {
@@ -398,7 +416,8 @@ a:focus {
 /**********************************/
 .nav-bar {
     position: relative;
-    background: #fdbe33;
+    /* background: #fdbe33; */
+    background: #33d0fd;
     transition: .3s;
 }
 
@@ -628,7 +647,8 @@ a:focus {
     margin-bottom: 45px;
     padding: 90px 0;
     text-align: center;
-    background: linear-gradient(135deg, #fdbe33 0%, #ffcb4a 50%, #ffe080 100%);
+    /* background: linear-gradient(135deg, #fdbe33 0%, #ffcb4a 50%, #ffe080 100%); */
+    background: linear-gradient(135deg, #33d0fd 0%, #b7e3ee 50%, #e0eff1 100%)
 }
 
 .page-header h2 {
@@ -3269,6 +3289,118 @@ a:focus {
     background: #fdbe33;
 }
 
+/* ── Combined caption (base — hidden by default, desktop shows it) ── */
+.vh-caption-combined {
+    display: none;
+}
+
+/* ── Desktop: 3 panels side-by-side, unified caption ── */
+@media (min-width: 992px) {
+    .vid-hero { height: 88vh; }
+
+    .vh-slides {
+        display: flex;
+        flex-direction: row;
+    }
+
+    /* All slides visible & side-by-side */
+    .vh-slide {
+        position: relative;
+        flex: 1;
+        opacity: 1 !important;
+        z-index: 2;
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+        transition: flex 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow: hidden;
+    }
+
+    .vh-slide:last-child { border-right: none; }
+    .vh-slide:hover { flex: 1.22; }
+    .vh-slide:nth-child(n+4) { display: none; }
+
+    /* Hide per-slide captions on desktop */
+    .vh-caption { display: none !important; }
+
+    /* Hide slider controls */
+    .vh-arrow,
+    .vh-indicators,
+    .vh-progress-bar { display: none !important; }
+
+    /* ── Combined caption — centred over all 3 panels ── */
+    .vh-caption-combined {
+        display: block;
+        position: absolute;
+        bottom: 10%;
+        left: 0;
+        right: 0;
+        z-index: 10;
+        text-align: center;
+        padding: 0 6%;
+        /* glass pill behind the text */
+        background: transparent;
+        pointer-events: none;
+    }
+
+    .vh-caption-combined .vh-sub {
+        display: inline-block;
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.82);
+        background: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 20px;
+        padding: 5px 18px;
+        margin-bottom: 16px;
+    }
+
+    .vh-caption-combined .vh-heading {
+        font-size: clamp(2.2rem, 4.5vw, 4rem);
+        font-weight: 800;
+        color: #ffffff;
+        line-height: 1.15;
+        margin-bottom: 28px;
+        text-shadow: 0 4px 32px rgba(0, 0, 0, 0.45);
+        letter-spacing: -0.5px;
+    }
+
+    .vh-caption-combined-actions {
+        display: flex;
+        gap: 16px;
+        justify-content: center;
+        pointer-events: all;
+    }
+
+    /* Primary CTA inherits existing .vh-cta but allow pointer events */
+    .vh-caption-combined .vh-cta { pointer-events: all; }
+
+    /* Outline variant */
+    .vh-cta-outline {
+        background: transparent !important;
+        color: #ffffff !important;
+        border: 2px solid rgba(255, 255, 255, 0.6) !important;
+    }
+
+    .vh-cta-outline:hover {
+        background: rgba(255, 255, 255, 0.15) !important;
+        border-color: #ffffff !important;
+    }
+}
+
+/* ── Mobile: per-slide captions, standard carousel ── */
+@media (max-width: 767.98px) {
+    .vh-caption  { bottom: 18%; left: 5%; }
+    .vh-arrow    { width: 40px; height: 40px; font-size: 15px; }
+    .vh-prev     { left: 10px; }
+    .vh-next     { right: 10px; }
+    .vh-heading  { margin-bottom: 20px; }
+    .vh-cta      { padding: 11px 26px; font-size: 14px; }
+}
+
+/* ── Mobile: standard 1-slide carousel ── */
 @media (max-width: 767.98px) {
     .vh-caption  { bottom: 18%; left: 5%; }
     .vh-arrow    { width: 40px; height: 40px; font-size: 15px; }

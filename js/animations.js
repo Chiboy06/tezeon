@@ -12,11 +12,39 @@
     ────────────────────────────────────────────────────────────── */
     function initVideoHero() {
         var slides  = document.querySelectorAll('.vh-slide');
+        if (!slides.length) return;
+
+        /* ── DESKTOP (≥992px): 3 panels, combined caption ── */
+        if (window.innerWidth >= 992) {
+            /* Play all 3 videos */
+            Array.prototype.slice.call(slides, 0, 3).forEach(function (slide) {
+                var video = slide.querySelector('video');
+                if (video) {
+                    video.setAttribute('preload', 'auto');
+                    video.play().catch(function () {});
+                }
+            });
+
+            /* Animate the single combined caption */
+            var combined = document.querySelector('.vh-caption-combined');
+            if (combined) {
+                var sub     = combined.querySelector('.vh-sub');
+                var heading = combined.querySelector('.vh-heading');
+                var actions = combined.querySelector('.vh-caption-combined-actions');
+                gsap.set([sub, heading, actions].filter(Boolean), { opacity: 0, y: 32 });
+                var tl = gsap.timeline({ delay: 0.4 });
+                tl.to(sub,     { opacity: 1, y: 0, duration: 0.6,  ease: 'power3.out' })
+                  .to(heading, { opacity: 1, y: 0, duration: 0.75, ease: 'power3.out' }, '-=0.3')
+                  .to(actions, { opacity: 1, y: 0, duration: 0.6,  ease: 'power3.out' }, '-=0.35');
+            }
+            return; /* no timer, no arrows on desktop */
+        }
+
+        /* ── MOBILE / TABLET: standard 1-slide carousel ── */
         var dots    = document.querySelectorAll('.vh-dot');
         var prevBtn = document.querySelector('.vh-prev');
         var nextBtn = document.querySelector('.vh-next');
         var fill    = document.getElementById('vhProgressFill');
-        if (!slides.length) return;
 
         var current  = 0;
         var total    = slides.length;
