@@ -130,7 +130,6 @@
             </div>
             <!-- Nav Bar End -->
 
-
             <!-- Page Header Start -->
             <div class="page-header">
                 <div class="container">
@@ -146,7 +145,6 @@
                 </div>
             </div>
             <!-- Page Header End -->
-
 
             <!-- Gallery Start -->
             <div class="portfolio">
@@ -375,61 +373,9 @@
                         </div>
 
                     </div>
-                    <!-- Gallery End -->
-                    <!--
-                      ══════════════════════════════════════════════
-                      HOW TO ADD A NEW PHOTO
-                      ══════════════════════════════════════════════
-                      1. Upload your photo to Cloudinary (cloudinary.com/console)
-                      2. Copy the image URL (https://res.cloudinary.com/dxd3nmbag/image/upload/...)
-                      3. Paste one of the PHOTO TEMPLATE blocks below before this comment
-                      4. Set ONE category class:
-                         cat-drilling | cat-filtration | cat-construction | cat-plumbing
-
-                      PHOTO TEMPLATE:
-                      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 portfolio-item cat-drilling wow fadeInUp">
-                        <div class="portfolio-warp">
-                          <div class="portfolio-img">
-                            <img src="YOUR_IMAGE_URL" alt="Short description" loading="lazy">
-                            <div class="portfolio-overlay"><p>Short description</p></div>
-                          </div>
-                          <div class="portfolio-text">
-                            <h3>Photo Title</h3>
-                            <a class="btn" href="YOUR_IMAGE_URL" data-lightbox="gallery" data-title="Photo Title">+</a>
-                          </div>
-                        </div>
-                      </div>
-
-                      ══════════════════════════════════════════════
-                      HOW TO ADD A NEW VIDEO
-                      ══════════════════════════════════════════════
-                      1. Upload your video to Cloudinary (cloudinary.com/console)
-                      2. Copy the VIDEO URL (https://res.cloudinary.com/dxd3nmbag/video/upload/...)
-                      3. Cloudinary auto-generates a thumbnail — just change .mp4 to .jpg in the URL
-                      4. Paste the VIDEO TEMPLATE block below before this comment
-
-                      VIDEO TEMPLATE:
-                      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 portfolio-item cat-video wow fadeInUp gallery-video-item">
-                        <div class="portfolio-warp">
-                          <div class="portfolio-img gallery-video-trigger" data-video-src="YOUR_VIDEO_URL.mp4">
-                            <img src="YOUR_VIDEO_URL.jpg" alt="Video description" loading="lazy">
-                            <div class="portfolio-overlay">
-                              <div class="gallery-play-btn"><i class="fas fa-play"></i></div>
-                            </div>
-                          </div>
-                          <div class="portfolio-text">
-                            <h3>Video Title</h3>
-                            <button class="btn gallery-video-trigger" data-video-src="YOUR_VIDEO_URL.mp4" aria-label="Play video">
-                              <i class="fas fa-play" style="font-size:24px;line-height:1;padding-top:3px;"></i>
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    -->
                 </div>
             </div>
             <!-- Gallery End -->
-
 
             <!-- Footer Start -->
             <div class="footer wow fadeIn" data-wow-delay="0.3s">
@@ -508,12 +454,13 @@
         </div>
 
         <!-- Gallery Video Modal -->
+        <!-- Added 'muted' attribute here to ensure video plays with no audio -->
         <div class="modal fade" id="galleryVideoModal" tabindex="-1" role="dialog" aria-label="Video player">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
                         <button type="button" class="gallery-close-btn" data-dismiss="modal" aria-label="Close video">&times;</button>
-                        <video id="galleryVideo" controls preload="none" playsinline>
+                        <video id="galleryVideo" controls preload="none" playsinline muted>
                             Your browser does not support HTML5 video.
                         </video>
                     </div>
