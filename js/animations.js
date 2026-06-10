@@ -14,43 +14,19 @@
         var slides  = document.querySelectorAll('.vh-slide');
         if (!slides.length) return;
 
-        /* ── DESKTOP (≥992px): 3 panels, combined caption ── */
-        if (window.innerWidth >= 992) {
-            /* Play all 3 videos */
-            Array.prototype.slice.call(slides, 0, 3).forEach(function (slide) {
-                var video = slide.querySelector('video');
-                if (video) {
-                    video.setAttribute('preload', 'auto');
-                    video.play().catch(function () {});
-                }
-            });
-
-            /* Animate the single combined caption */
-            var combined = document.querySelector('.vh-caption-combined');
-            if (combined) {
-                var sub     = combined.querySelector('.vh-sub');
-                var heading = combined.querySelector('.vh-heading');
-                var actions = combined.querySelector('.vh-caption-combined-actions');
-                gsap.set([sub, heading, actions].filter(Boolean), { opacity: 0, y: 32 });
-                var tl = gsap.timeline({ delay: 0.4 });
-                tl.to(sub,     { opacity: 1, y: 0, duration: 0.6,  ease: 'power3.out' })
-                  .to(heading, { opacity: 1, y: 0, duration: 0.75, ease: 'power3.out' }, '-=0.3')
-                  .to(actions, { opacity: 1, y: 0, duration: 0.6,  ease: 'power3.out' }, '-=0.35');
-            }
-            return; /* no timer, no arrows on desktop */
-        }
-
-        /* ── MOBILE / TABLET: standard 1-slide carousel ── */
         var dots    = document.querySelectorAll('.vh-dot');
         var prevBtn = document.querySelector('.vh-prev');
         var nextBtn = document.querySelector('.vh-next');
         var fill    = document.getElementById('vhProgressFill');
+        var hero    = document.getElementById('vidHero');
+        var mq      = window.matchMedia('(min-width: 992px)');
 
         var current  = 0;
         var total    = slides.length;
-        var timer;
+        var timer    = null;
         var DURATION = 7000;
 
+        /* ── Caption helpers ── */
         function animateCaption(slide) {
             var sub     = slide.querySelector('.vh-sub');
             var heading = slide.querySelector('.vh-heading');
@@ -63,6 +39,20 @@
               .to(cta,     { opacity: 1, y: 0, duration: 0.6,  ease: 'power3.out' }, 0.38);
         }
 
+        function animateCombinedCaption() {
+            var combined = document.querySelector('.vh-caption-combined');
+            if (!combined) return;
+            var sub     = combined.querySelector('.vh-sub');
+            var heading = combined.querySelector('.vh-heading');
+            var actions = combined.querySelector('.vh-caption-combined-actions');
+            gsap.set([sub, heading, actions].filter(Boolean), { opacity: 0, y: 32 });
+            var tl = gsap.timeline({ delay: 0.4 });
+            tl.to(sub,     { opacity: 1, y: 0, duration: 0.6,  ease: 'power3.out' })
+              .to(heading, { opacity: 1, y: 0, duration: 0.75, ease: 'power3.out' }, '-=0.3')
+              .to(actions, { opacity: 1, y: 0, duration: 0.6,  ease: 'power3.out' }, '-=0.35');
+        }
+
+        /* ── Slide / timer helpers (mobile) ── */
         function showSlide(idx) {
             slides[current].classList.remove('active');
             if (dots[current]) dots[current].classList.remove('active');
@@ -87,25 +77,77 @@
             timer = setInterval(function () { showSlide(current + 1); }, DURATION);
         }
 
-        showSlide(0);
-        startTimer();
+        function stopTimer() {
+            clearInterval(timer);
+            timer = null;
+        }
 
-        if (prevBtn) prevBtn.addEventListener('click', function () { showSlide(current - 1); startTimer(); });
-        if (nextBtn) nextBtn.addEventListener('click', function () { showSlide(current + 1); startTimer(); });
+        /* ── Mode entry points ── */
+        function enterDesktop() {
+            stopTimer();
+            /* Pause progress bar */
+            if (fill) { gsap.killTweensOf(fill); gsap.set(fill, { width: '0%' }); }
+            /* Play first 3 video panels */
+            Array.prototype.slice.call(slides, 0, 3).forEach(function (slide) {
+                var video = slide.querySelector('video');
+                if (video) { video.setAttribute('preload', 'auto'); video.play().catch(function () {}); }
+            });
+            animateCombinedCaption();
+        }
+
+        function enterMobile() {
+            /* Pause videos that aren't the active slide */
+            slides.forEach(function (slide, i) {
+                if (i !== current) {
+                    var video = slide.querySelector('video');
+                    if (video) video.pause();
+                }
+                slide.classList.toggle('active', i === current);
+            });
+            dots.forEach(function (dot, i) { dot.classList.toggle('active', i === current); });
+            showSlide(current);
+            startTimer();
+        }
+
+        /* ── Bind controls ONCE — guard with mq.matches so desktop ignores them ── */
+        if (prevBtn) prevBtn.addEventListener('click', function () {
+            if (!mq.matches) { showSlide(current - 1); startTimer(); }
+        });
+        if (nextBtn) nextBtn.addEventListener('click', function () {
+            if (!mq.matches) { showSlide(current + 1); startTimer(); }
+        });
         dots.forEach(function (dot, i) {
-            dot.addEventListener('click', function () { showSlide(i); startTimer(); });
+            dot.addEventListener('click', function () {
+                if (!mq.matches) { showSlide(i); startTimer(); }
+            });
         });
 
-        /* Touch swipe */
-        var hero = document.getElementById('vidHero');
+        /* Touch swipe — bound once, ignored on desktop */
         var swipeX = 0;
         if (hero) {
             hero.addEventListener('touchstart', function (e) { swipeX = e.touches[0].clientX; }, { passive: true });
             hero.addEventListener('touchend', function (e) {
+                if (mq.matches) return;
                 var diff = swipeX - e.changedTouches[0].clientX;
-                if (Math.abs(diff) > 50) { diff > 0 ? showSlide(current + 1) : showSlide(current - 1); startTimer(); }
+                if (Math.abs(diff) > 50) {
+                    diff > 0 ? showSlide(current + 1) : showSlide(current - 1);
+                    startTimer();
+                }
             }, { passive: true });
         }
+
+        /* ── Breakpoint listener — re-initialises on resize ── */
+        function onMQChange(e) {
+            if (e.matches) { enterDesktop(); } else { enterMobile(); }
+        }
+        if (mq.addEventListener) {
+            mq.addEventListener('change', onMQChange);
+        } else {
+            mq.addListener(onMQChange); /* Safari < 14 fallback */
+        }
+
+        /* ── Initial state ── */
+        if (mq.matches) { enterDesktop(); } else { showSlide(0); startTimer(); }
     }
 
     /* ──────────────────────────────────────────────────────────────
