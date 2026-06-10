@@ -56,21 +56,27 @@
     });
     
     
-    // Modal Video
+    // Modal Video — supports direct MP4/WebM (Cloudinary) via <video> element
     $(document).ready(function () {
-        var $videoSrc;
-        $('.btn-play').click(function () {
-            $videoSrc = $(this).data("src");
+        var videoSrc = '';
+
+        $(document).on('click', '.btn-play', function () {
+            videoSrc = $(this).data('src');
         });
-        console.log($videoSrc);
 
-        $('#videoModal').on('shown.bs.modal', function (e) {
-            $("#video").attr('src', $videoSrc + "?autoplay=1&amp;modestbranding=1&amp;showinfo=0");
-        })
+        $('#videoModal').on('shown.bs.modal', function () {
+            var vid = document.getElementById('video');
+            if (!vid || !videoSrc) return;
+            vid.src = videoSrc;
+            vid.play().catch(function () {});
+        });
 
-        $('#videoModal').on('hide.bs.modal', function (e) {
-            $("#video").attr('src', $videoSrc);
-        })
+        $('#videoModal').on('hide.bs.modal', function () {
+            var vid = document.getElementById('video');
+            if (!vid) return;
+            vid.pause();
+            vid.src = '';
+        });
     });
 
 
